@@ -14,7 +14,7 @@ set pumheight=10
 set showmatch
 set matchtime=1
 
-" remap
+" general remap
 " yank to the line-end
 nnoremap Y y$
 " increment number
@@ -26,10 +26,17 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.zplug/repos/junegunn/fzf', 'do': './install --all' }
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/unite.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'editorconfig/editorconfig-vim'
 call plug#end()
+
+" Unite
+let g:unite_enable_start_insert=1
+nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
+nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 
 " lightline config
 let g:lightline = {
@@ -45,6 +52,10 @@ let g:lightline = {
 	\   'filename': 'LightLineFilename',
 	\ },
 	\ }
+
+let g:lightline.tabline = {
+	\ 'left': [ [ 'tabs' ] ],
+	\ 'right': [ [ 'close' ] ] }
 
 function! LightLineModified()
 	if &filetype == "help"
