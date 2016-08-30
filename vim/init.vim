@@ -21,6 +21,10 @@ nnoremap Y y$
 nnoremap + <C-a>
 " decriment number
 nnoremap - <C-x>
+" tabpage next 
+nnoremap <C-s>n :tabnext<CR>
+" tabpage previous
+nnoremap <C-s>p :tabprevious<CR>
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.zplug/repos/junegunn/fzf', 'do': './install --all' }
