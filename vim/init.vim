@@ -30,9 +30,11 @@ nnoremap Q <Nop>
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tomtom/tcomment_vim'
+Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/.zplug/repos/junegunn/fzf', 'do': './install --all' }
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
+Plug 'plasticboy/vim-markdown'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/neosnippet.vim'
