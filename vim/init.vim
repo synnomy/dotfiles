@@ -225,18 +225,13 @@ if !has('lua') && !has('nvim')
 	inoremap <expr><C-y> neocomplcache#close_popup()
 	inoremap <expr><C-e> neocomplcache#cancel_popup()
 	" Close popup by <Space>.
-	"inoremap <expr><Space> pumvisible() ?
-	neocomplcache#close_popup() : "\<Space>"
+	"inoremap <expr><Space> pumvisible() ?  neocomplcache#close_popup() : "\<Space>"
 
 	" For cursor moving in insert mode(Not recommended)
-	"inoremap <expr><Left>
-	neocomplcache#close_popup() . "\<Left>"
-	"inoremap <expr><Right>
-	neocomplcache#close_popup() . "\<Right>"
-	"inoremap <expr><Up>
-	neocomplcache#close_popup() . "\<Up>"
-	"inoremap <expr><Down>
-	neocomplcache#close_popup() . "\<Down>"
+	"inoremap <expr><Left> neocomplcache#close_popup() . "\<Left>"
+	"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+	"inoremap <expr><Up> neocomplcache#close_popup() . "\<Up>"
+	"inoremap <expr><Down> neocomplcache#close_popup() . "\<Down>"
 	" Or set this.
 	"let g:neocomplcache_enable_cursor_hold_i = 1
 	" Or set this.
