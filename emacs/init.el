@@ -19,6 +19,7 @@
 
 ;;; plugins installed with el-get
 (el-get-bundle auto-complete/auto-complete)
+(el-get-bundle cargo)
 (el-get-bundle clojure-emacs/clojure-mode)
 (el-get-bundle clojure-emacs/cider)
 (el-get-bundle clojure-emacs/clj-refactor
@@ -30,6 +31,7 @@
 (el-get-bundle editorconfig)
 (el-get-bundle emacs-helm/helm)
 (el-get-bundle emacs-jp/helm-c-yasnippet)
+(el-get-bundle emacs-racer)
 (el-get-bundle emacswiki/sequential-command
   :type emacswiki
   :pkgname "sequential-command.el")
@@ -44,6 +46,9 @@
 (el-get-bundle joaotavora/yasnippet)
 (el-get-bundle magit)
 (el-get-bundle projectile)
+(el-get-bundle rust-mode)
+(el-get-bundle racer-mode)
+(el-get-bundle syohex/emacs-quickrun)
 
 ;;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -72,6 +77,23 @@
 (bind-key "C-h" 'backward-delete-char)
 ;; unset suspend button
 (bind-key "C-z" nil)
+
+;;; OS-specific settings
+;; osx
+(when (eq system-type 'darwin)
+  (defun pbcopy ()
+    (interactive)
+    (let ((deactivate-mark t))
+      (call-process-region (point) (mark) "pbcopy")))
+
+  (defun pbpaste ()
+    (interactive)
+    (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
+
+  (defun pbcut ()
+    (interactive)
+    (pbcopy)
+    (delete-region (region-beginning) (region-end))))
 
 ;;; editorconfig settings
 (use-package editorconfig
@@ -114,7 +136,8 @@
   ;;(global-company-mode)
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 2
-        company-selection-wrap-around t)
+        company-selection-wrap-around t
+	company-tooltip-align-annotations t)
 
   (bind-keys :map company-mode-map
              ("C-i" . company-complete))
@@ -154,18 +177,32 @@
   :config
   (setq indent-tabs-mode nil))
 
+;;; rust-mode settings
+(use-package rust-mode
+  :mode (("\\.rs\\'" . rust-mode))
+  :init
+  (setq racer-rust-src-path
+	"~/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src/")
+  (bind-keys :map rust-mode-map
+	     ("TAB" . company-indent-or-complete-common))
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'rust-mode-hook #'cargo-minor-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+
 ;;; clojure-mode settings
 (use-package clojure-mode
   :mode (("\\.clj\\'" . clojure-mode))
   :init
-  (bind-keys :map clojure-mode-map
-	     ("C-h" . paredit-backward-delete))
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'show-paren-mode)
   (add-hook 'clojure-mode-hook #'auto-complete-mode)
   ;; (add-hook 'clojure-mode-hook #'company-mode)
-  (add-hook 'clojure-mode-hook #'paredit-mode))
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  :config
+  (bind-keys :map clojure-mode-map
+	     ("C-h" . paredit-backward-delete)))
 
 ;;; cider settings (clojure)
 (use-package cider
@@ -180,7 +217,14 @@
 	cider-prompt-save-file-on-load 'always-save
 	cider-font-lock-dynamically '(macro core function var)
 	cider-overlays-use-font-lock t)
-  (cider-repl-toggle-pretty-printing))
+  (cider-repl-toggle-pretty-printing)
+
+  ;; play-clj
+  (defun play-clj-reload ()
+    (interactive)
+    (cider-interactive-eval
+     "(on-gl (set-screen! hello-world-game main-screen))"))
+  )
 
 ;;; ac-cider settings (clojure)
 (use-package ac-cider
@@ -220,8 +264,6 @@
   :config
   (diminish 'yas-minor-mode "Yas")
   (diminish 'editorconfig-mode "EConf")
-  (diminish 'paredit-mode "ParE")
-  (diminish 'subword-mode "SubW")
   (diminish 'eldoc-mode "ElDoc"))
 
 (custom-set-variables
