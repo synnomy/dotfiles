@@ -3,11 +3,16 @@ source ~/.zplug/init.zsh
 
 export PATH="$PATH:$HOME/bin:$HOME/.go/bin:$HOME/.cargo/bin"
 export GOPATH=$HOME/.go
-export BYOBU_PREFIX=$(brew --prefix)
 export ENHANCD_FILTER="fzf:non-existing-filter"
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export RUST_SRC_PATH="$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 export PGDATA=/usr/local/var/postgres
+
+# os specific settings
+case ${OSTYPE} in
+	darwin*)
+		export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+		;;
+esac
 
 # local variables
 local PYTHON2_PACKAGE_PATH="/Users/togegarlic/Library/Python/2.7/lib/python/site-packages"
@@ -24,7 +29,7 @@ alias zmv='noglob zmv -W'
 # powerline
 # . ${PYTHON2_PACKAGE_PATH}/powerline/bindings/zsh/powerline.zsh
 
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "zsh-users/zsh-completions"
 
