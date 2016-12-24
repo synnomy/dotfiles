@@ -78,6 +78,7 @@ Plug 'othree/yajs.vim'
 Plug 'cespare/vim-toml'
 Plug 'thinca/vim-ref'
 Plug 'udalov/kotlin-vim'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 "--------------------------------------------------------------------------------
