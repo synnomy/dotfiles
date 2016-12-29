@@ -46,7 +46,7 @@ alias zmv='noglob zmv -W'
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug "zsh-users/zsh-completions"
-
+zplug "zplug/zplug"
 
 zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
 zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
