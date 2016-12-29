@@ -43,8 +43,8 @@
 (el-get-bundle magit)
 (el-get-bundle projectile)
 (el-get-bundle rust-mode)
-(el-get-bundle racer-mode)
-(el-get-bundle syohex/emacs-quickrun)
+(el-get-bundle emacs-racer)
+(el-get-bundle quickrun)
 (el-get-bundle haskell-mode)
 
 ;;; theme
@@ -63,7 +63,7 @@
 (setq auto-save-default nil)
 ;; scrolling in terminal
 (xterm-mouse-mode t)
-(mouse-wheel-mode t)
+;(mouse-wheel-mode t)
 (global-set-key [mouse-4] '(lambda () (interactive) (scroll-down 1)))
 (global-set-key [mouse-5] '(lambda () (interactive) (scroll-up 1)))
 
@@ -180,8 +180,8 @@
   :init
   (setq racer-rust-src-path
 	"~/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src/")
-  (bind-keys :map rust-mode-map
-	     ("TAB" . company-indent-or-complete-common))
+  ;; (bind-keys :map rust-mode-map
+  ;; 	     ("TAB" . company-indent-or-complete-common))
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
