@@ -36,6 +36,18 @@ nnoremap tp :tabprevious<CR>
 " disable Q (ex mode)
 nnoremap Q <Nop>
 
+"
+" tab remap
+nnoremap [TABCMD] <nop>
+nmap <leader>t [TABCMD]
+
+nnoremap <silent> [TABCMD]f :<c-u>tabfirst<cr>
+nnoremap <silent> [TABCMD]l :<c-u>tablast<cr>
+nnoremap <silent> [TABCMD]n :<c-u>tabnext<cr>
+nnoremap <silent> [TABCMD]N :<c-u>tabNext<cr>
+nnoremap <silent> [TABCMD]p :<c-u>tabprevious<cr>
+nnoremap <silent> [TABCMD]c :<c-u>tabclose<cr>
+
 "--------------------------------------------------------------------------------
 " Vim-Plug settings
 
