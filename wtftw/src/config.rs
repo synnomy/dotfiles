@@ -25,17 +25,16 @@ pub extern fn configure(_: &mut WindowManager, w: &WindowSystem, config: &mut Co
 
     config.general.mod_mask = modm;
     config.general.border_color = 0x404040;
-    config.general.focus_border_color = 0xebebeb;
-    config.general.border_width = 2;
+    config.general.focus_border_color = 0xf49e42;
+    config.general.border_width = 1;
     config.general.terminal = (String::from("termite"), String::from(""));
+    config.general.launcher = String::from("/home/synnomy/bin/rofi-run");
     config.general.layout = LayoutCollection::new(vec!(
             GapLayout::new(8, AvoidStrutsLayout::new(vec!(Direction::Up, Direction::Down), BinarySpacePartition::new())),
             GapLayout::new(8, AvoidStrutsLayout::new(vec!(Direction::Up, Direction::Down), MirrorLayout::new(BinarySpacePartition::new()))),
             NoBordersLayout::new(Box::new(FullLayout))));
 
-    config.general.tags = (vec!("一: ターミナル", "二: ウェブ", "三: コード",
-                                "四: メディア", "五: スチーム", "六: ラテック",
-                                "七: 音楽", "八: im", "九: 残り"))
+    config.general.tags = (vec!("1:code", "2:web", "3:paint"))
         .into_iter().map(String::from).collect();
 
     // Register key handlers
