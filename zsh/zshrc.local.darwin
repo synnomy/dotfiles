@@ -1,0 +1,10 @@
+# .zshrc.local for OSX
+
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export RUST_SRC_PATH="$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
+export PATH="$PATH:~/.cargo/bin"
+
+
+alias e="/usr/local/bin/emacs -nw"
+alias clojure="java -cp ~/clojure-1.8.0.jar clojure.main"
+alias love="~/Applications/love.app/Contents/MacOS/love"

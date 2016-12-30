@@ -1,32 +1,15 @@
 # Created by newuser for 5.2
 source ~/.zplug/init.zsh
 
-export PATH="$PATH:$HOME/bin:$HOME/.go/bin:$HOME/.cargo/bin:$HOME/.cabal/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.go/bin"
 export GOPATH=$HOME/.go
 export ENHANCD_FILTER="fzf:non-existing-filter"
-export RUST_SRC_PATH="$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 export PGDATA=/usr/local/var/postgres
 
 # ls colors for termite
 eval $(dircolors ~/.dircolors)
 
-# os specific settings
-case ${OSTYPE} in
-	darwin*)
-		export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-		;;
-	linux*)
-		alias ls='ls --color=auto'
-		;;
-esac
-
-# local variables
-local PYTHON2_PACKAGE_PATH="/Users/togegarlic/Library/Python/2.7/lib/python/site-packages"
-
 # alias
-alias love="~/Applications/love.app/Contents/MacOS/love"
-alias clojure="java -cp ~/clojure-1.8.0.jar clojure.main"
-alias e="/usr/local/bin/emacs -nw"
 alias reload='exec zsh -l'
 
 # prompt
@@ -39,9 +22,6 @@ precmd() { print "" }
 # zmv
 autoload -Uz zmv
 alias zmv='noglob zmv -W'
-
-# powerline
-# . ${PYTHON2_PACKAGE_PATH}/powerline/bindings/zsh/powerline.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
@@ -68,3 +48,5 @@ fi
 zplug load --verbose
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

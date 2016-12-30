@@ -1,0 +1,9 @@
+# .zshrc.local for Archlinux machine
+export XDG_CONFIG_HOME="~/.config"
+## cabal for Haskell
+export PATH="$PATH:~/.cabal/bin"
+## cargo for Rust
+export PATH="$PATH:~/.cargo/bin"
+
+## colored ls
+alias ls='ls --color=auto'
