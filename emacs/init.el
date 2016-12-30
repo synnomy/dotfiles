@@ -2,6 +2,13 @@
 ;;; <synnomy@gmail.com>
 
 ;;; el-get settings
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
@@ -18,9 +25,7 @@
 (el-get-bundle cargo)
 (el-get-bundle clojure-emacs/clojure-mode)
 (el-get-bundle clojure-emacs/cider)
-(el-get-bundle clojure-emacs/clj-refactor
-  :type github
-  :pkgname "clojure-emacs/clj-refactor.el")
+(el-get-bundle clj-refactor)
 (el-get-bundle company-mode/company-mode)
 (el-get-bundle clojure-emacs/ac-cider)
 (el-get-bundle diminish)
@@ -28,12 +33,8 @@
 (el-get-bundle emacs-helm/helm)
 (el-get-bundle emacs-jp/helm-c-yasnippet)
 (el-get-bundle emacs-racer)
-(el-get-bundle emacswiki/sequential-command
-  :type emacswiki
-  :pkgname "sequential-command.el")
-(el-get-bundle emacswiki/sequential-command-config
-  :type emacswiki
-  :pkgname "sequential-command-config.el")
+(el-get-bundle sequential-command)
+(el-get-bundle sequential-command-config)
 (el-get-bundle fxbois/web-mode)
 (el-get-bundle Fuco1/smartparens)
 (el-get-bundle Fanael/rainbow-delimiters)
