@@ -91,6 +91,10 @@ Plug 'cespare/vim-toml'
 Plug 'thinca/vim-ref'
 Plug 'udalov/kotlin-vim'
 Plug 'rust-lang/rust.vim'
+" Haskell
+Plug 'kana/vim-filetype-haskell'
+Plug 'eagletmt/ghcmod-vim'
+Plug 'ujihisa/neco-ghc'
 call plug#end()
 
 "--------------------------------------------------------------------------------
