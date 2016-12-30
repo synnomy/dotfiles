@@ -1,0 +1,15 @@
+# run 'aplay -l' to find the card number of PCI200.
+# device 1, subdevice 0 -> S/PDIF output
+pcm.!default {
+	type hw
+	card 0
+	device 1
+	subdevice 0
+}
+
+ctl.!default {
+	type hw
+	card 0
+	device 1
+	subdevice 0
+}
