@@ -23,6 +23,8 @@ set noswapfile
 "--------------------------------------------------------------------------------
 " general remap
 
+" another ESC key
+imap <C-j> <esc>
 " yank to an line-end
 nnoremap Y y$
 " increment number
@@ -48,6 +50,13 @@ nnoremap <silent> [TABCMD]N :<c-u>tabNext<cr>
 nnoremap <silent> [TABCMD]p :<c-u>tabprevious<cr>
 nnoremap <silent> [TABCMD]c :<c-u>tabclose<cr>
 
+" unite keymap
+nnoremap [UNITECMD] <nop>
+nmap <leader>f [UNITECMD]
+
+nnoremap [UNITECMD]u :<C-u>Unite -no-split<Space>
+nnoremap <silent> [UNITECMD]f :<C-u>Unite<Space>buffer<cr>
+
 "--------------------------------------------------------------------------------
 " Vim-Plug settings
 
@@ -68,7 +77,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.zplug/repos/junegunn/fzf', 'do': './install --
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'plasticboy/vim-markdown'
-" Plug 'Shougo/unite.vim'
+Plug 'Shougo/unite.vim'
 if has('lua') && !has('nvim')
 	Plug 'Shougo/neocomplete.vim'
 endif
@@ -89,7 +98,9 @@ Plug 'fatih/vim-go'
 Plug 'othree/yajs.vim'
 Plug 'cespare/vim-toml'
 Plug 'thinca/vim-ref'
+Plug 'thinca/vim-quickrun'
 Plug 'udalov/kotlin-vim'
+" Rust
 Plug 'rust-lang/rust.vim'
 " Haskell
 Plug 'kana/vim-filetype-haskell'
