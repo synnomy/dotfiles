@@ -2,9 +2,14 @@
 
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export RUST_SRC_PATH="$HOME/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
-export PATH="$PATH:~/.cargo/bin"
-
+export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:$HOME/.go/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
+export GOPATH="$HOME/.go/"
+export PGDATA=/usr/local/var/postgres
 
 alias e="/usr/local/bin/emacs -nw"
 alias clojure="java -cp ~/clojure-1.8.0.jar clojure.main"
 alias love="~/Applications/love.app/Contents/MacOS/love"
+
+. /Users/togegarlic/torch/install/bin/torch-activate
