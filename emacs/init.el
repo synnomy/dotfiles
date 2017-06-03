@@ -7,7 +7,9 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;; (package-initialize)
+;; (setq package-archives
+;;       '(("melpa" . "http://melpa.org/packages/")))
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
@@ -21,13 +23,12 @@
 (el-get 'sync)
 
 ;;; plugins installed with el-get
-(el-get-bundle auto-complete/auto-complete)
+(el-get-bundle auto-complete)
 (el-get-bundle cargo)
-(el-get-bundle clojure-emacs/clojure-mode)
-(el-get-bundle clojure-emacs/cider)
-(el-get-bundle clj-refactor)
-(el-get-bundle company-mode/company-mode)
-(el-get-bundle clojure-emacs/ac-cider)
+(el-get-bundle clojure-mode)
+(el-get-bundle cider)
+(el-get-bundle company-mode)
+(el-get-bundle ac-cider)
 (el-get-bundle diminish)
 (el-get-bundle editorconfig)
 (el-get-bundle emacs-helm/helm)
@@ -35,18 +36,24 @@
 (el-get-bundle emacs-racer)
 (el-get-bundle sequential-command)
 (el-get-bundle sequential-command-config)
-(el-get-bundle fxbois/web-mode)
-(el-get-bundle Fuco1/smartparens)
-(el-get-bundle Fanael/rainbow-delimiters)
+(el-get-bundle web-mode)
+(el-get-bundle smartparens)
+(el-get-bundle rainbow-delimiters)
 (el-get-bundle helm-projectile)
-(el-get-bundle jwiegley/use-package)
-(el-get-bundle joaotavora/yasnippet)
+(el-get-bundle use-package)
+(el-get-bundle yasnippet)
 (el-get-bundle magit)
 (el-get-bundle projectile)
 (el-get-bundle rust-mode)
 (el-get-bundle emacs-racer)
 (el-get-bundle quickrun)
 (el-get-bundle haskell-mode)
+;; (el-get-bundle paredit)
+(el-get-bundle clj-refactor)
+(el-get-bundle aggressive-indent-mode)
+(el-get-bundle python-mode)
+(el-get-bundle jedi)
+(el-get-bundle py-autopep8)
 
 ;;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -160,6 +167,9 @@
 	  "~/.emacs.d/snippets"))
   (yas-global-mode t))
 
+;;; smartparens
+(use-package smartparens-config)
+
 ;;; emacs-lisp-mode settings
 (use-package emacs-lisp-mode
   :mode (("\\.el\\'" . emacs-lisp-mode))
@@ -171,7 +181,8 @@
   (add-hook 'emacs-lisp-mode-hook #'eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook #'auto-complete-mode)
   (add-hook 'emacs-lisp-mode-hook #'show-paren-mode)
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  ;; (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
   :config
   (setq indent-tabs-mode nil))
 
@@ -195,12 +206,25 @@
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'show-paren-mode)
+  (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'auto-complete-mode)
   ;; (add-hook 'clojure-mode-hook #'company-mode)
-  (add-hook 'clojure-mode-hook #'paredit-mode)
+  ;; (add-hook 'clojure-mode-hook #'paredit-mode)
   :config
   (bind-keys :map clojure-mode-map
 	     ("C-h" . paredit-backward-delete)))
+
+;;; clojurescript-mode
+(use-package clojurescript-mode
+  :mode (("\\.cljs\\'" . clojurescript-mode))
+  :init
+  (add-hook 'clojurescript-mode-hook #'subword-mode)
+  (add-hook 'clojurescript-mode-hook #'show-paren-mode)
+  (add-hook 'clojurescript-mode-hook #'smartparens-mode)
+  (add-hook 'clojurescript-mode-hook #'auto-complete-mode))
+
+;;; clj-refactor
+(use-package clj-refactor)
 
 ;;; cider settings (clojure)
 (use-package cider
@@ -215,6 +239,10 @@
 	cider-prompt-save-file-on-load 'always-save
 	cider-font-lock-dynamically '(macro core function var)
 	cider-overlays-use-font-lock t)
+  (setq cider-cljs-lein-repl
+	"(do (require 'figwheel-sidecar.repl-api)
+             (figwheel-sidecar.repl-api/start-figwheel!)
+             (figwheel-sidecar.repl-api/cljs-repl))")
   (cider-repl-toggle-pretty-printing)
 
   ;; play-clj
@@ -230,6 +258,21 @@
   (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
   (add-hook 'cider-mode-hook 'ac-cider-setup)
   (add-hook 'cider-repl-mode-hook 'ac-cider-setup))
+
+
+
+(use-package python-mode
+  :mode (("\\.py\\'" . python-mode))
+  :init
+  (defun python-shell-parse-command ()
+    "Return the string used to execute the inferior Python"
+    "python3 -i")
+  (add-hook 'python-mode-hook #'jedi-mode)
+  ;; jedi
+  (setq jedi:complete-on-dot t)
+  ;; py-autopep8
+)
+
 
 ;;; smartparens settings
 ;; (use-package smartparens-config
@@ -271,8 +314,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("0677967bc5ea64ef49f25470962d87c1abaf1668472a5c76d8d170400b336085" "8a9c4d2a2f8ecd8e5e3e9e903d1344e4577a0b7de72d7091e73bd114b5da132d" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab" default)))
- '(package-selected-packages (quote (editorconfig inflections queue))))
+    ("9317fb3650f91e0f62021a58530b3af5445b9ee15bf9678ca82fb0b893cb2cab" "0677967bc5ea64ef49f25470962d87c1abaf1668472a5c76d8d170400b336085" "8a9c4d2a2f8ecd8e5e3e9e903d1344e4577a0b7de72d7091e73bd114b5da132d" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
